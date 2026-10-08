@@ -1,0 +1,140 @@
+[gd_scene format=3 uid="uid://cpsxbe0bp6vdd"]
+
+[ext_resource type="Script" uid="uid://duj663u71bgi7" path="res://script/main.gd" id="1_brvut"]
+[ext_resource type="Script" uid="uid://du27jihkohg5" path="res://script/ball.gd" id="1_itxqv"]
+[ext_resource type="Script" uid="uid://cccr7tvjo0qoh" path="res://script/player.gd" id="2_v0l8b"]
+[ext_resource type="Script" uid="uid://b1bwe7aidpv6p" path="res://script/bot.gd" id="3_wp4xf"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0yc80"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wkpy8"]
+size = Vector2(1315.4375, 93)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lxkqy"]
+size = Vector2(18, 76)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_i241j"]
+size = Vector2(81, 645)
+
+[node name="Main" type="Node2D" unique_id=409121920]
+script = ExtResource("1_brvut")
+
+[node name="Ball" type="CharacterBody2D" parent="." unique_id=1460492560]
+position = Vector2(560, 323)
+collision_layer = 8
+collision_mask = 15
+motion_mode = 1
+script = ExtResource("1_itxqv")
+
+[node name="ColorRect" type="ColorRect" parent="Ball" unique_id=493933712]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -10.0
+offset_top = -10.0
+offset_right = 10.0
+offset_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ball" unique_id=935068199]
+shape = SubResource("RectangleShape2D_0yc80")
+
+[node name="Wall" type="StaticBody2D" parent="." unique_id=1682558970]
+collision_mask = 14
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall" unique_id=1636478283]
+position = Vector2(575.71875, -36.5)
+shape = SubResource("RectangleShape2D_wkpy8")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Wall" unique_id=1294400989]
+position = Vector2(575.4375, 682)
+shape = SubResource("RectangleShape2D_wkpy8")
+
+[node name="Rackt" type="CharacterBody2D" parent="." unique_id=1239409134]
+position = Vector2(54, 322)
+collision_layer = 2
+collision_mask = 9
+motion_mode = 1
+script = ExtResource("2_v0l8b")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Rackt" unique_id=326795399]
+shape = SubResource("RectangleShape2D_lxkqy")
+
+[node name="ColorRect" type="ColorRect" parent="Rackt" unique_id=421666930]
+offset_left = -9.0
+offset_top = -38.0
+offset_right = 9.0
+offset_bottom = 38.0
+
+[node name="Bot" type="CharacterBody2D" parent="." unique_id=1512971460]
+position = Vector2(1101, 316)
+collision_layer = 4
+collision_mask = 9
+motion_mode = 1
+script = ExtResource("3_wp4xf")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bot" unique_id=555195550]
+shape = SubResource("RectangleShape2D_lxkqy")
+
+[node name="ColorRect" type="ColorRect" parent="Bot" unique_id=242035667]
+offset_left = -9.0
+offset_top = -38.0
+offset_right = 9.0
+offset_bottom = 38.0
+
+[node name="GoalLeft" type="Area2D" parent="." unique_id=1428440634]
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GoalLeft" unique_id=824556550]
+position = Vector2(-42.5, 312.5)
+shape = SubResource("RectangleShape2D_i241j")
+
+[node name="GoalRight" type="Area2D" parent="." unique_id=750876752]
+position = Vector2(1233, 0)
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GoalRight" unique_id=361321417]
+position = Vector2(-42.5, 312.5)
+shape = SubResource("RectangleShape2D_i241j")
+
+[node name="HUD" type="CanvasLayer" parent="." unique_id=1287528755]
+
+[node name="ScoreLabel" type="RichTextLabel" parent="HUD" unique_id=51879648]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -40.5
+offset_top = 40.0
+offset_right = 40.5
+offset_bottom = 80.0
+grow_horizontal = 2
+text = "BUGGGGG"
+fit_content = true
+autowrap_mode = 0
+
+[node name="CountdownLabel" type="RichTextLabel" parent="HUD" unique_id=907185567]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/outline_size = 30
+theme_override_font_sizes/normal_font_size = 500
+bbcode_enabled = true
+text = "[rainbow]-1"
+fit_content = true
+autowrap_mode = 0
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="body_entered" from="GoalLeft" to="." method="_on_goal_left_body_entered"]
+[connection signal="body_entered" from="GoalRight" to="." method="_on_goal_right_body_entered"]
